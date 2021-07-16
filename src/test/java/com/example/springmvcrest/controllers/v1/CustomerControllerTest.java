@@ -66,17 +66,17 @@ class CustomerControllerTest {
 
     }
     @Test
-    void testGetCustomerByFirstName() throws Exception {
+    void testGetCustomerById() throws Exception {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(FIRST_NAME);
         customerDTO.setLastName(LAST_NAME);
 
         when(customerService.getCustomerById(anyLong())).thenReturn(customerDTO);
 
-        mockMvc.perform(get("/api/v1/customers/" + FIRST_NAME)
+        mockMvc.perform(get("/api/v1/customers/" + ID)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.firstname", equalTo(FIRST_NAME)));
+        .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)));
 
     }
 }
