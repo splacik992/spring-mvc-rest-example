@@ -18,8 +18,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -72,7 +71,7 @@ class CustomerControllerTest {
         customerDTO.setFirstName(FIRST_NAME);
         customerDTO.setLastName(LAST_NAME);
 
-        when(customerService.getCustomerByName(anyString())).thenReturn(customerDTO);
+        when(customerService.getCustomerById(anyLong())).thenReturn(customerDTO);
 
         mockMvc.perform(get("/api/v1/customers/" + FIRST_NAME)
         .contentType(MediaType.APPLICATION_JSON))

@@ -19,9 +19,10 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerMapper = customerMapper;
     }
 
+
     @Override
-    public CustomerDTO getCustomerByName(String name) {
-        return customerMapper.customerToCustomerDTO(customerRepository.findByFirstName(name));
+    public CustomerDTO getCustomerById(Long id) {
+        return customerMapper.customerToCustomerDTO(customerRepository.findCustomerById(id));
     }
 
     @Override

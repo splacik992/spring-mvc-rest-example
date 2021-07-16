@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -38,9 +39,9 @@ class CustomerServiceImplTest {
         customer.setFirstName(FIRST_NAME);
         customer.setLastName(LAST_NAME);
 
-        when(customerRepository.findByFirstName(anyString())).thenReturn(customer);
+        when(customerRepository.findCustomerById(anyLong())).thenReturn(customer);
 
-        CustomerDTO customerDTO = customerService.getCustomerByName(FIRST_NAME);
+        CustomerDTO customerDTO = customerService.getCustomerById(ID);
 
         assertEquals(FIRST_NAME, customerDTO.getFirstName());
         assertEquals(LAST_NAME, customerDTO.getLastName());
