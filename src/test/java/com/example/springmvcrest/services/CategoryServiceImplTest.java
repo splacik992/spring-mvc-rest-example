@@ -38,6 +38,7 @@ class CategoryServiceImplTest {
 
         when(categoryRepository.findAll()).thenReturn(categoryList);
 
+
         //when
         List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
 

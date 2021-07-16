@@ -2,7 +2,6 @@ package com.example.springmvcrest.domain;
 
 
 import lombok.Data;
-import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
