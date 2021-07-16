@@ -2,6 +2,7 @@ package com.example.springmvcrest.services;
 
 import com.example.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.example.springmvcrest.api.v1.model.CustomerDTO;
+import com.example.springmvcrest.domain.Customer;
 import com.example.springmvcrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +32,24 @@ public class CustomerServiceImpl implements CustomerService {
                 .findAll().stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
+                    customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId());
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+
+        Customer customer = customerMapper.customerDTOtoCustomer(customerDTO);
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
+
+        returnDto.setCustomerUrl("/api/v1/customer/" + savedCustomer.getId());
+
+        return returnDto;
     }
 
 
