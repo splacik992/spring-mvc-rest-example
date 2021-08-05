@@ -112,7 +112,7 @@ class CustomerControllerTest extends AbstractRestControllerTest {
 
         when(customerService.saveCustomerByDTO(anyLong(),any(CustomerDTO.class))).thenReturn(returnDto);
 
-        mockMvc.perform(post("/api/v1/customer/")
+        mockMvc.perform(put("/api/v1/customer/" + 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customerDTO)))
                 .andExpect(status().isOk())
