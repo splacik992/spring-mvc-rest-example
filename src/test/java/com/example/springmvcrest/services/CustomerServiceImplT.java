@@ -9,6 +9,7 @@ import com.example.springmvcrest.repositories.CustomerRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,6 +27,7 @@ public class CustomerServiceImplT {
     CustomerRepository customerRepository;
 
     @Autowired
+    @Mock
     CategoryRepository categoryRepository;
 
     CustomerService customerService;
@@ -56,7 +58,7 @@ public class CustomerServiceImplT {
 
         String originalName = customer.getFirstName();
 
-        customerService.patchCustomer(id,customerDTO);
+        customerService.patchCustomer(id, customerDTO);
 
         assertNotEquals(originalName, customerDTO.getFirstName());
     }
@@ -85,6 +87,11 @@ public class CustomerServiceImplT {
         assertEquals(updatedName, updatedCustomer.getFirstName());
         assertNotSame(originalName, updatedCustomer.getFirstName());
         assertNotSame(originalLastName, updatedCustomer.getLastName());
+
+    }
+
+    @Test
+    public void deleteCustomer() {
 
     }
 
