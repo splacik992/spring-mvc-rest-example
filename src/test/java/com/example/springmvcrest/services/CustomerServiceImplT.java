@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 
 
@@ -37,7 +36,7 @@ public class CustomerServiceImplT {
         System.out.println("Loading Customer Data");
         System.out.println(customerRepository.findAll().size());
 
-        Bootstrap bootstrap = new Bootstrap(categoryRepository,customerRepository);
+        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
         bootstrap.run();
 
         customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
@@ -45,9 +44,24 @@ public class CustomerServiceImplT {
     }
 
     @Test
-    public void patchCustomerUpdateFirstName(){
+    public void patchCustomerUpdateFirstName() {
+        String updatedName = "ChangedFirstName";
+        long id = getCustomersId();
 
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(updatedName);
+
+        Customer customer = customerRepository.findCustomerById(id);
+        assertNotNull(customer);
+
+        String originalName = customer.getFirstName();
+
+        customerService.patchCustomer(id,customerDTO);
+
+        assertNotEquals(originalName, customerDTO.getFirstName());
     }
+
+
     @Test
     public void patchCustomerUpdateLastName() {
         String updatedName = "UpdatedName";
@@ -63,18 +77,18 @@ public class CustomerServiceImplT {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(updatedName);
 
-        customerService.patchCustomer(id,customerDTO);
+        customerService.patchCustomer(id, customerDTO);
 
         Customer updatedCustomer = customerRepository.findCustomerById(id);
 
         assertNotNull(updatedCustomer);
-        assertEquals(updatedName,updatedCustomer.getFirstName());
-        assertNotSame(originalName,updatedCustomer.getFirstName());
-        assertNotSame(originalLastName,updatedCustomer.getLastName());
+        assertEquals(updatedName, updatedCustomer.getFirstName());
+        assertNotSame(originalName, updatedCustomer.getFirstName());
+        assertNotSame(originalLastName, updatedCustomer.getLastName());
 
     }
 
-    private Long getCustomersId(){
+    private Long getCustomersId() {
         List<Customer> customers = customerRepository.findAll();
 
         System.out.println("Customers found: " + customers.size());
